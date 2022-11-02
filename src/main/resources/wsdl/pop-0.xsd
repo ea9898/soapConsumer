@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2010 rel. 2 (x64) (http://www.altova.com) by ozzy (Ru-Board) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd" xmlns:q1="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q2="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q3="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q4="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q5="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q6="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q7="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q8="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" targetNamespace="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd" elementFormDefault="qualified">
+	<xs:import namespace="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" schemaLocation="pop-1.xsd"/>
+	<xs:element name="PopValidateDocumentRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q1:RequestBody" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MessageFormatVersion" type="tns:MessageFormatVersion"/>
+	<xs:simpleType name="MessageFormatVersion">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="V10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PopValidateDocumentResponce">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q2:ResponceBody" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PopValidateDocumentPackRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q3:RequestBody" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PopValidateDocumentPackResponce">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q4:RequestId"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PopValidationProcessStatusRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q5:RequestId"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PopValidationProcessStatusResponce">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q6:ValidationProcessStatus"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PopDocumentPackValidationResultRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q7:RequestId"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PopDocumentPackValidationResultResponce">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="q8:ResponceBody" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

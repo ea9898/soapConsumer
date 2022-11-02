@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:barcode.security" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CheckDocumentService" targetNamespace="urn:barcode.security">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:barcode.security" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:barcode.security">
+  <xs:element name="checkDocumentRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="documentAndSignature" type="xs:base64Binary"/>
+        <xs:element minOccurs="0" name="attachment" type="xs:base64Binary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="checkDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="requestId" type="xs:string"/>
+        <xs:element name="report" type="xs:base64Binary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getResultResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="report" type="xs:base64Binary"/>
+        <xs:element minOccurs="0" name="cms" type="xs:base64Binary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BarsFaultException" type="BarsFaultException"/>
+  <xs:complexType name="BarsFaultException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getResultRequest" nillable="true" type="xs:string"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getResult">
+    <wsdl:part element="tns:getResultRequest" name="requestId">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkDocumentResponse">
+    <wsdl:part element="tns:checkDocumentResponse" name="checkDocumentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BarsFaultException">
+    <wsdl:part element="tns:BarsFaultException" name="BarsFaultException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultResponse">
+    <wsdl:part element="tns:getResultResponse" name="getResultResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkDocument">
+    <wsdl:part element="tns:checkDocumentRequest" name="checkDocumentRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CheckDocumentServicePortType">
+    <wsdl:operation name="getResult">
+      <wsdl:input message="tns:getResult" name="getResult">
+    </wsdl:input>
+      <wsdl:output message="tns:getResultResponse" name="getResultResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BarsFaultException" name="BarsFaultException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkDocument">
+      <wsdl:input message="tns:checkDocument" name="checkDocument">
+    </wsdl:input>
+      <wsdl:output message="tns:checkDocumentResponse" name="checkDocumentResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BarsFaultException" name="BarsFaultException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CheckDocumentServiceSoapBinding" type="tns:CheckDocumentServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getResult">
+      <soap:operation soapAction="getResult" style="document"/>
+      <wsdl:input name="getResult">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getResultResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BarsFaultException">
+        <soap:fault name="BarsFaultException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkDocument">
+      <soap:operation soapAction="checkDocument" style="document"/>
+      <wsdl:input name="checkDocument">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkDocumentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BarsFaultException">
+        <soap:fault name="BarsFaultException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CheckDocumentService">
+    <wsdl:port binding="tns:CheckDocumentServiceSoapBinding" name="CheckDocumentServicePortType">
+      <soap:address location="http://10.251.201.21:9001/api/CheckDocumentService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

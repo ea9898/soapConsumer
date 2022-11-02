@@ -1,0 +1,11 @@
+ru/studio/schemas/wsdl/CheckDocumentRequest.class
+ru/studio/utils/DatatypeConverter.class
+ru/studio/utils/DatatypeConverter$EnotIlligaArgumentException.class
+ru/studio/schemas/wsdl/BarsFaultException.class
+ru/studio/schemas/wsdl/Adapter2.class
+ru/studio/schemas/wsdl/package-info.class
+ru/studio/schemas/wsdl/ObjectFactory.class
+ru/studio/exception/CustomException.class
+ru/studio/schemas/wsdl/Adapter1.class
+ru/studio/schemas/wsdl/GetResultResponse.class
+ru/studio/schemas/wsdl/CheckDocumentResponse.class

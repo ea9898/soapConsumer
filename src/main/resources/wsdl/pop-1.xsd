@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2010 rel. 2 (x64) (http://www.altova.com) by ozzy (Ru-Board) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" xmlns:q1="http://microsoft.com/wsdl/types/" targetNamespace="http://dev.triasoft.com/svd/1.0/schemes/common.xsd" elementFormDefault="qualified">
+	<xs:import namespace="http://microsoft.com/wsdl/types/" schemaLocation="pop-2.xsd"/>
+	<xs:element name="RequestBody" type="xs:base64Binary"/>
+	<xs:element name="ResponceBody" type="xs:base64Binary"/>
+	<xs:element name="RequestId" type="q1:guid"/>
+	<xs:element name="ValidationProcessStatus" type="tns:ValidationProcessStatus"/>
+	<xs:simpleType name="ValidationProcessStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Processing"/>
+			<xs:enumeration value="Completed"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://tempuri.org/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="PopService" targetNamespace="http://tempuri.org/">
+	<wsdl:import namespace="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd" location="pop-0.wsdl"/>
+	<wsdl:types/>
+	<wsdl:binding name="CustomBinding_IPop" type="i0:IPop">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsp:PolicyReference URI="#CustomBinding_IPop_policy"/>
+		<wsdl:operation name="ValidateDocument">
+			<soap:operation soapAction="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/ValidateDocument" style="document"/>
+			<wsdl:input name="PopValidateDocumentRequest">
+				<soap:header message="i0:PopValidateDocumentRequest_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PopValidateDocumentResponce">
+				<soap:header message="i0:PopValidateDocumentResponce_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ValidateDocumentPack">
+			<soap:operation soapAction="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/ValidateDocumentPack" style="document"/>
+			<wsdl:input name="PopValidateDocumentPackRequest">
+				<soap:header message="i0:PopValidateDocumentPackRequest_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PopValidateDocumentPackResponce">
+				<soap:header message="i0:PopValidateDocumentPackResponce_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetValidationProcessStatus">
+			<soap:operation soapAction="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/GetValidationProcessStatus" style="document"/>
+			<wsdl:input name="PopValidationProcessStatusRequest">
+				<soap:header message="i0:PopValidationProcessStatusRequest_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PopValidationProcessStatusResponce">
+				<soap:header message="i0:PopValidationProcessStatusResponce_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDocumentPackValidationResult">
+			<soap:operation soapAction="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/GetDocumentPackValidationResult" style="document"/>
+			<wsdl:input name="PopDocumentPackValidationResultRequest">
+				<soap:header message="i0:PopDocumentPackValidationResultRequest_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PopDocumentPackValidationResultResponce">
+				<soap:header message="i0:PopDocumentPackValidationResultResponce_Headers" part="MessageFormatVersion" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PopService">
+		<wsdl:port name="CustomBinding_IPop" binding="tns:CustomBinding_IPop">
+			<soap:address location="https://enot.enotary.ru/pop"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsp:Policy wsu:Id="CustomBinding_IPop_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="true"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+</wsdl:definitions>

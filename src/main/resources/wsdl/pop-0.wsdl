@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" targetNamespace="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/Imports">
+			<xsd:import schemaLocation="pop-0.xsd" namespace="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd"/>
+			<xsd:import schemaLocation="pop-1.xsd" namespace="http://dev.triasoft.com/svd/1.0/schemes/common.xsd"/>
+			<xsd:import schemaLocation="pop-2.xsd" namespace="http://microsoft.com/wsdl/types/"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="PopValidateDocumentRequest">
+		<wsdl:part name="parameters" element="tns:PopValidateDocumentRequest"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentRequest_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentResponce">
+		<wsdl:part name="parameters" element="tns:PopValidateDocumentResponce"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentResponce_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentPackRequest">
+		<wsdl:part name="parameters" element="tns:PopValidateDocumentPackRequest"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentPackRequest_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentPackResponce">
+		<wsdl:part name="parameters" element="tns:PopValidateDocumentPackResponce"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidateDocumentPackResponce_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidationProcessStatusRequest">
+		<wsdl:part name="parameters" element="tns:PopValidationProcessStatusRequest"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidationProcessStatusRequest_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidationProcessStatusResponce">
+		<wsdl:part name="parameters" element="tns:PopValidationProcessStatusResponce"/>
+	</wsdl:message>
+	<wsdl:message name="PopValidationProcessStatusResponce_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopDocumentPackValidationResultRequest">
+		<wsdl:part name="parameters" element="tns:PopDocumentPackValidationResultRequest"/>
+	</wsdl:message>
+	<wsdl:message name="PopDocumentPackValidationResultRequest_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:message name="PopDocumentPackValidationResultResponce">
+		<wsdl:part name="parameters" element="tns:PopDocumentPackValidationResultResponce"/>
+	</wsdl:message>
+	<wsdl:message name="PopDocumentPackValidationResultResponce_Headers">
+		<wsdl:part name="MessageFormatVersion" element="tns:MessageFormatVersion"/>
+	</wsdl:message>
+	<wsdl:portType name="IPop">
+		<wsdl:operation name="ValidateDocument">
+			<wsdl:input name="PopValidateDocumentRequest" message="tns:PopValidateDocumentRequest" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/ValidateDocument"/>
+			<wsdl:output name="PopValidateDocumentResponce" message="tns:PopValidateDocumentResponce" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/ValidateDocumentResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ValidateDocumentPack">
+			<wsdl:input name="PopValidateDocumentPackRequest" message="tns:PopValidateDocumentPackRequest" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/ValidateDocumentPack"/>
+			<wsdl:output name="PopValidateDocumentPackResponce" message="tns:PopValidateDocumentPackResponce" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/ValidateDocumentPackResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetValidationProcessStatus">
+			<wsdl:input name="PopValidationProcessStatusRequest" message="tns:PopValidationProcessStatusRequest" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/GetValidationProcessStatus"/>
+			<wsdl:output name="PopValidationProcessStatusResponce" message="tns:PopValidationProcessStatusResponce" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/GetValidationProcessStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetDocumentPackValidationResult">
+			<wsdl:input name="PopDocumentPackValidationResultRequest" message="tns:PopDocumentPackValidationResultRequest" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/GetDocumentPackValidationResult"/>
+			<wsdl:output name="PopDocumentPackValidationResultResponce" message="tns:PopDocumentPackValidationResultResponce" wsaw:Action="http://dev.triasoft.com/svd/1.0/schemes/pop.xsd/IPop/GetDocumentPackValidationResultResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

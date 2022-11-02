@@ -1,0 +1,17 @@
+<bindings version="2.0"
+              xmlns="http://java.sun.com/xml/ns/jaxb"
+			  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <globalBindings typesafeEnumMaxMembers="512">
+		<xjc:serializable uid="1"/>
+        <javaType name="java.util.Date"
+                      xmlType="xsd:dateTime"
+					  parseMethod="ru.studio.utils.DatatypeConverter.parseDateTime"
+                      printMethod="ru.studio.utils.DatatypeConverter.dateTimeToString"/>
+        <javaType name="java.util.Date"
+                      xmlType="xsd:date"
+                      parseMethod="ru.studio.utils.DatatypeConverter.parseDate"
+                      printMethod="ru.studio.utils.DatatypeConverter.dateToString"/>
+    </globalBindings>
+</bindings>
