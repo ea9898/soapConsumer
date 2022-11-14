@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--================================================================-->
+<!--версия от 20.08.2017-->
+<!--================================================================-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:fciit:svd" targetNamespace="urn:fciit:svd" elementFormDefault="qualified">
+	<xs:simpleType name="String32">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String16">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="16"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String13">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="13"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String10">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String8">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String1024">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1024"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String256">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String64">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdditionalRequest">
+		<xs:annotation>
+			<xs:documentation>Запрос приложений</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>Образец подписи нотариуса</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Образец печати подписи</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocKind">
+		<xs:annotation>
+			<xs:documentation>Тип документа в запросе только (доверенность 1012)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="ValidationStepResult">
+		<xs:annotation>
+			<xs:documentation>Результат проверки</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="BlankSeries">
+		<xs:annotation>
+			<xs:documentation>Серия бланка</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d{2}[А-Я]{2})|(14(\d{2}|[А-Я]{2}))"/>
+			<xs:pattern value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Base64Image">
+		<xs:restriction base="xs:base64Binary">
+			<xs:maxLength value="255000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Person">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица (отчество указывается при наличии)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="first" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="last" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="patronymic" type="tns:String64">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NPerson">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица (отчество указывается при наличии)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="notaryid" type="tns:String8">
+			<xs:annotation>
+				<xs:documentation>Федереальный номер нотариуса</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="first" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="last" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="patronymic" type="tns:String64">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="APerson">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица (отчество указывается при наличии)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="assistantid" type="tns:String8">
+			<xs:annotation>
+				<xs:documentation>Федереальный номер ВРИО</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="first" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="last" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="patronymic" type="tns:String64">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="LPerson">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица (отчество указывается при наличии)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="first" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="last" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="patronymic" type="tns:String64">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="regionCode" use="required">
+			<xs:annotation>
+				<xs:documentation>Код региона РФ по ФИАС</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="2"/>
+					<xs:pattern value="[0-9]{2}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CPerson">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица (отчество указывается при наличии)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="first" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="last" type="tns:String64" use="required">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="patronymic" type="tns:String64">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="countryCode" use="required">
+			<xs:annotation>
+				<xs:documentation>Код страны (из Общероссийского классификатора стран мира)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="3"/>
+					<xs:pattern value="[0-9]{3}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Blank">
+		<xs:annotation>
+			<xs:documentation>Бланк в запросе</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="series" type="tns:String10" use="required">
+			<xs:annotation>
+				<xs:documentation>Серия бланка</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="number" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Номер бланка</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ForeginOrganizationType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты обратившегося Российского юр. лица (обязательно заполнить хотя бы один аттрибут)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Name" type="tns:String256" use="required">
+			<xs:annotation>
+				<xs:documentation>Полное наименование</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="RussianOrganizationType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты обратившегося Российского юр. лица</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="OGRN" type="tns:String13">
+			<xs:annotation>
+				<xs:documentation>ОГРН</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="INN" type="tns:String10">
+			<xs:annotation>
+				<xs:documentation>ИНН</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ApplicantType">
+		<xs:annotation>
+			<xs:documentation>Обратившееся лицо в запросе</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="PrivatePerson" type="tns:Person">
+				<xs:annotation>
+					<xs:documentation>Физическое лицо</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RussianOrganization" type="tns:RussianOrganizationType">
+				<xs:annotation>
+					<xs:documentation>Российское юридическое лицо</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ForeginOrganization" type="tns:ForeginOrganizationType">
+				<xs:annotation>
+					<xs:documentation>Иностранное юридическое лицо</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:annotation>
+			<xs:documentation>Запрос проверки документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ActCertifier" type="tns:ActCertifierType"/>
+			<xs:element name="Applicant" type="tns:ApplicantType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Субъект</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Blank" type="tns:Blank" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Бланки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Attach" type="tns:AdditionalRequest" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Запрос приложений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="date" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата совершения нотариального действия</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="regCode" type="tns:String32" use="required">
+			<xs:annotation>
+				<xs:documentation>Реестровый номер</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="kind" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип документа</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:DocKind">
+					<xs:enumeration value="18001">
+						<xs:annotation>
+							<xs:documentation>Удостоверение доверенности</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18002">
+						<xs:annotation>
+							<xs:documentation>Удостоверение распоряжения об отмене доверенности</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18003">
+						<xs:annotation>
+							<xs:documentation>Удостоверение завещания</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18004">
+						<xs:annotation>
+							<xs:documentation>Распоряжение об отмене завещания</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18005">
+						<xs:annotation>
+							<xs:documentation>Брачный договор</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18006">
+						<xs:annotation>
+							<xs:documentation>Договор инвестиционного товарищества</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18007">
+						<xs:annotation>
+							<xs:documentation>Удостоверение прочих договоров и соглашений</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18008">
+						<xs:annotation>
+							<xs:documentation>Удостоверение прочих односторонних сделок и волеизъявлений</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18009">
+						<xs:annotation>
+							<xs:documentation>Выдача свидетельства о праве на наследство по закону</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18010">
+						<xs:annotation>
+							<xs:documentation>Выдача свидетельства о праве на наследство по завещанию</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18011">
+						<xs:annotation>
+							<xs:documentation>Выдача свидетельства о праве собственности на долю в общем имуществе по заявлению пережившего супруга</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18012">
+						<xs:annotation>
+							<xs:documentation>Удостоверение фактов</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18013">
+						<xs:annotation>
+							<xs:documentation>Свидетельствование подлинности подписи</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18014">
+						<xs:annotation>
+							<xs:documentation>Удостоверение равнозначности</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18015">
+						<xs:annotation>
+							<xs:documentation>Совершение исполнительных надписей</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18016">
+						<xs:annotation>
+							<xs:documentation>Выдача дубликатов</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18017">
+						<xs:annotation>
+							<xs:documentation>Предоставление заявлений на государственную регистрацию</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18018">
+						<xs:annotation>
+							<xs:documentation>Свидетельствование верности копий документов и выписок из них</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18019">
+						<xs:annotation>
+							<xs:documentation>Обеспечение доказательств</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18020">
+						<xs:annotation>
+							<xs:documentation>Принятие в депозит денежных средств и ценных бумаг</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18021">
+						<xs:annotation>
+							<xs:documentation>Принятие на хранение документов</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18022">
+						<xs:annotation>
+							<xs:documentation>Совершение протеста векселя</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18023">
+						<xs:annotation>
+							<xs:documentation>Совершение морского протеста</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18024">
+						<xs:annotation>
+							<xs:documentation>Направление запросов в центральный каталог кредитных историй</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18025">
+						<xs:annotation>
+							<xs:documentation>Предъявление чеков к платежу и удостоверение неоплаты чеков</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18026">
+						<xs:annotation>
+							<xs:documentation>Удостоверение тождественности собственноручной подписи инвалида по зрению с её факсимильным воспроизведением</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18027">
+						<xs:annotation>
+							<xs:documentation>Удостоверение тождественности гражданина с лицом, изображенным на фотографии</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18028">
+						<xs:annotation>
+							<xs:documentation>Удостоверение времени предъявления документа</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18029">
+						<xs:annotation>
+							<xs:documentation>Удостоверение решения органов управления юр.лиц, участников юр.лиц</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18030">
+						<xs:annotation>
+							<xs:documentation>Наложение и снятие запрещения отчуждения имущества</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18031">
+						<xs:annotation>
+							<xs:documentation>Направление уведомления залогодателю об обращении взыскания на заложенное имущество</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18032">
+						<xs:annotation>
+							<xs:documentation>Принятие закрытого завещания</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18033">
+						<xs:annotation>
+							<xs:documentation>Принятие мер по охране наследственного имущества и управлению им</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18034">
+						<xs:annotation>
+							<xs:documentation>Свидетельствование верности перевода нотариусом документов с одного языка на другой</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="18035">
+						<xs:annotation>
+							<xs:documentation>Иное нотариальное действие</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Report">
+		<xs:annotation>
+			<xs:documentation>Отчёт по документу</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="flk" type="tns:FlkStep" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Форматно-логический контроль</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="notary" type="tns:NotaryStep" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проверка нотаруиса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="assistant" type="tns:AssistantStep" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проверка ВРИО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="document" type="tns:DocumentStep" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проверка документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicant" type="tns:ApplicantStep" minOccurs="0"/>
+			<xs:element name="blank" type="tns:BlankStep" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проверка бланков</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="qr" type="tns:QrStep" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проверка QR-кода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="candocuments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отменящие документы</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tns:CanDocumentStep">
+							<xs:sequence>
+								<xs:element name="candocument" type="tns:CanDocumentType" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resolution" type="tns:ResolutionStep" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidationStep">
+		<xs:annotation>
+			<xs:documentation>Описание проверки</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="result" use="required">
+			<xs:annotation>
+				<xs:documentation>Результат проверки</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:ValidationStepResult">
+					<xs:enumeration value="OK">
+						<xs:annotation>
+							<xs:documentation>Успешно</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="failure">
+						<xs:annotation>
+							<xs:documentation>Неудачно</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="description" type="tns:String1024">
+			<xs:annotation>
+				<xs:documentation>Описание проверки</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="FlkStep">
+		<xs:annotation>
+			<xs:documentation>Проверка ФЛК</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BlankStep">
+		<xs:annotation>
+			<xs:documentation>Проверка бланков</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NotaryStep">
+		<xs:annotation>
+			<xs:documentation>Проверка нотариуса</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep">
+				<xs:sequence minOccurs="0">
+					<xs:element name="notaryid" type="tns:String8" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Фед. № </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="name" type="tns:String256" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ФИО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="phone" type="tns:String256" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Телефон</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="address" type="tns:String256" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Адрес</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="order" type="tns:AssignOrder" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Приказ о назначении</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="license" type="tns:License" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Лицензия</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="signature" type="tns:Base64Image" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Образец подписи</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="stamp" type="tns:Base64Image" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Образец печати</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AssignOrder">
+		<xs:annotation>
+			<xs:documentation>Приказ о назначении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="number" type="tns:String16">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="License">
+		<xs:annotation>
+			<xs:documentation>Лицензия</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="number" type="tns:String16">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AssistantStep">
+		<xs:annotation>
+			<xs:documentation>Этап проверки ВрИО</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep">
+				<xs:sequence>
+					<xs:element name="name" type="tns:String64" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ФИО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="order" type="tns:AssignOrder" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Приказ о назначении</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="license" type="tns:License" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Лицензия</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DocumentStep">
+		<xs:annotation>
+			<xs:documentation>Проверка документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep">
+				<xs:sequence>
+					<xs:element name="docid" type="tns:String64" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="docregnum" type="tns:String32" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Реестровый номер</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="docdate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="docname" type="tns:String1024" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Наименование документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="serverid" type="xs:nonNegativeInteger" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер в реестре ЕИС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="servertime" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата регистрации в реестре ЕИС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ApplicantStep">
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="QrStep">
+		<xs:annotation>
+			<xs:documentation>Проверка целостности и подписи в QR-кодах</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep">
+				<xs:sequence minOccurs="0">
+					<xs:element name="text" type="xs:string"/>
+					<xs:element name="cms" type="xs:base64Binary"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CanDocumentStep">
+		<xs:annotation>
+			<xs:documentation>Проверка отменяющих документов</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:ValidationStep"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ResolutionStep">
+		<xs:attribute name="result" use="required">
+			<xs:annotation>
+				<xs:documentation>Код резолюции</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:enumeration value="1">
+						<xs:annotation>
+							<xs:documentation>Содержание электронного образа нотариально удостоверенного документа соответствует содержанию нотариально удостоверенного документа.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="2">
+						<xs:annotation>
+							<xs:documentation>Содержание электронного образа нотариально удостоверенного документа не соответствует содержанию нотариально удостоверенного документа.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="3">
+						<xs:annotation>
+							<xs:documentation>Невозможно подтвердить содержание. Электронный образ нотариально удостоверенного документа не поддается прочтению.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="4">
+						<xs:annotation>
+							<xs:documentation>Невозможно подтвердить содержание. Отсутствует экземпляр нотариально удостоверенного документа</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="description" use="required">
+			<xs:annotation>
+				<xs:documentation>Содержание резолюции (соответствующее result)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:String1024"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CanDocumentType">
+		<xs:annotation>
+			<xs:documentation>Отменяющие документы</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="notaryid" type="tns:String8" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фед. №</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="notaryname" type="tns:String256">
+				<xs:annotation>
+					<xs:documentation>ФИО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="docregnum" type="tns:String32">
+				<xs:annotation>
+					<xs:documentation>Реестровый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="docdate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serverid" type="xs:nonNegativeInteger">
+				<xs:annotation>
+					<xs:documentation>Номер в реестре ЕИС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="servertime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации в реестре ЕИС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActCertifierType">
+		<xs:choice>
+			<xs:element name="NotaryCertifier" type="tns:NotaryCertifierType"/>
+			<xs:element name="LocalOfficialCertifier" type="tns:LPerson"/>
+			<xs:element name="ConsularOfficialCertifier" type="tns:CPerson"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="NotaryCertifierType">
+		<xs:sequence>
+			<xs:element name="Notary" type="tns:NPerson">
+				<xs:annotation>
+					<xs:documentation>Нотариус</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Assistant" type="tns:APerson" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ВРИО нотаруиса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Applicant" type="tns:ApplicantType">
+		<xs:annotation>
+			<xs:documentation>Обратившееся лицо</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentBatch" type="tns:Document" nillable="true">
+		<xs:annotation>
+			<xs:documentation>Корневой элемент запроса проверки докумнета</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ReportBatch" type="tns:Report">
+		<xs:annotation>
+			<xs:documentation>Корневой элемент ответа проверки документа</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>
